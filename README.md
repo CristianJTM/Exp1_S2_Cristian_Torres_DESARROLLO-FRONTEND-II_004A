@@ -6,7 +6,7 @@ Tailwind CSS.
 
 ## Sitio publicado
 
-[Ver la aplicación en GitHub Pages](https://cristianjtm.github.io/Exp1_S1_Cristian_Torres_DESARROLLO-FRONTEND-II_004A/)
+[Ver la aplicación en GitHub Pages](https://cristianjtm.github.io/Exp1_S2_Cristian_Torres_DESARROLLO-FRONTEND-II_004A/)
 
 ## Stack
 
@@ -185,7 +185,7 @@ npm run deploy
 URL del sitio:
 
 ```text
-https://cristianjtm.github.io/Exp1_S1_Cristian_Torres_DESARROLLO-FRONTEND-II_004A/
+https://cristianjtm.github.io/Exp1_S2_Cristian_Torres_DESARROLLO-FRONTEND-II_004A/
 ```
 
 ## Notas
