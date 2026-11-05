@@ -9,20 +9,24 @@ const LARGO_MAX = 60
 
 export function validarContacto(form) {
   const errores = {}
+  const nombre = String(form.nombre ?? '').trim()
+  const email = String(form.email ?? '').trim()
+  const telefono = String(form.telefono ?? '').trim()
+  const mensaje = String(form.mensaje ?? '').trim()
 
-  if (form.nombre.trim().length < 2) {
+  if (nombre.length < 2) {
     errores.nombre = 'Ingresa tu nombre completo.'
   }
 
-  if (!EMAIL_REGEX.test(form.email.trim())) {
+  if (!EMAIL_REGEX.test(email)) {
     errores.email = 'Ingresa un correo válido, por ejemplo nombre@correo.cl.'
   }
 
-  if (form.telefono.trim() && !TELEFONO_REGEX.test(form.telefono.trim())) {
+  if (telefono && !TELEFONO_REGEX.test(telefono)) {
     errores.telefono = 'Ingresa un teléfono válido o deja el campo vacío.'
   }
 
-  if (form.mensaje.trim().length < 10) {
+  if (mensaje.length < 10) {
     errores.mensaje = 'Cuéntanos un poco más (mínimo 10 caracteres).'
   }
 

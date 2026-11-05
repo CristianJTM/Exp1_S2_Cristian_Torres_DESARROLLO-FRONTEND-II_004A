@@ -29,7 +29,11 @@ export default function FormField({
   const isTailwind = variant === 'tailwind'
   const errorId = `error-${id}`
   const wrapperClass = isTailwind ? tailwindStyles.formField : styles.formField
-  const controlClass = isTailwind ? tailwindStyles.control : undefined
+  const controlClass = isTailwind
+    ? `${tailwindStyles.control}${
+        error ? ' !border-sf-error focus:!border-sf-error focus:!ring-sf-error/20' : ''
+      }`
+    : undefined
   const commonProps = {
     id,
     name,

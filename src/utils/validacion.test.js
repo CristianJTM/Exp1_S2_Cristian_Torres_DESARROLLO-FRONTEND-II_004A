@@ -77,4 +77,7 @@ test('validarContacto conserva sus reglas', () => {
 
   assert.deepEqual(validarContacto(valido), {})
   assert.ok(validarContacto({ ...valido, email: 'correo-invalido' }).email)
+  assert.ok(validarContacto({ ...valido, telefono: '12abc' }).telefono)
+  assert.ok(validarContacto({ ...valido, mensaje: 'corto' }).mensaje)
+  assert.ok(validarContacto({}).nombre)
 })
