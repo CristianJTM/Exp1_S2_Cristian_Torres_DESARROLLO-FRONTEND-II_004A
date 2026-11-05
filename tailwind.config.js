@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const sfColor = (name) => `rgb(var(--color-${name}-rgb) / <alpha-value>)`
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   corePlugins: {
@@ -11,15 +13,17 @@ export default {
     extend: {
       colors: {
         sf: {
-          green: '#136f43',
-          dark: '#0d5232',
-          soft: '#e8f5ee',
-          cream: '#fbf8f1',
-          sand: '#f3efe6',
-          text: '#1d2521',
-          muted: '#5f6b64',
-          border: '#e3ded3',
-          error: '#b3261e',
+          green: sfColor('primary'),
+          dark: sfColor('primary-dark'),
+          soft: sfColor('primary-soft'),
+          accent: sfColor('accent'),
+          cream: sfColor('bg'),
+          sand: sfColor('bg-muted'),
+          surface: sfColor('surface'),
+          text: sfColor('text'),
+          muted: sfColor('muted'),
+          border: sfColor('border'),
+          error: sfColor('error'),
         },
       },
     },

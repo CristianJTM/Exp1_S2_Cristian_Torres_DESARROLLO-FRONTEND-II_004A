@@ -1,17 +1,38 @@
 :root {
   --nav-h: 68px;
 
-  --color-primary: #136f43;
-  --color-primary-dark: #0d5232;
-  --color-primary-soft: #e8f5ee;
-  --color-accent: #f2a93b;
-  --color-bg: #fbf8f1;
-  --color-bg-muted: #f3efe6;
-  --color-surface: #ffffff;
-  --color-text: #1d2521;
-  --color-muted: #5f6b64;
-  --color-border: #e3ded3;
-  --color-error: #b3261e;
+  --color-primary-rgb: 19 111 67;
+  --color-primary: rgb(var(--color-primary-rgb));
+
+  --color-primary-dark-rgb: 13 82 50;
+  --color-primary-dark: rgb(var(--color-primary-dark-rgb));
+
+  --color-primary-soft-rgb: 232 245 238;
+  --color-primary-soft: rgb(var(--color-primary-soft-rgb));
+
+  --color-accent-rgb: 242 169 59;
+  --color-accent: rgb(var(--color-accent-rgb));
+
+  --color-bg-rgb: 251 248 241;
+  --color-bg: rgb(var(--color-bg-rgb));
+
+  --color-bg-muted-rgb: 243 239 230;
+  --color-bg-muted: rgb(var(--color-bg-muted-rgb));
+
+  --color-surface-rgb: 255 255 255;
+  --color-surface: rgb(var(--color-surface-rgb));
+
+  --color-text-rgb: 29 37 33;
+  --color-text: rgb(var(--color-text-rgb));
+
+  --color-muted-rgb: 95 107 100;
+  --color-muted: rgb(var(--color-muted-rgb));
+
+  --color-border-rgb: 227 222 211;
+  --color-border: rgb(var(--color-border-rgb));
+
+  --color-error-rgb: 179 38 30;
+  --color-error: rgb(var(--color-error-rgb));
 
   --radius-sm: 12px;
   --radius-md: 22px;
