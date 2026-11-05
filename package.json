@@ -9,6 +9,7 @@
     "build": "vite build",
     "postbuild": "node scripts/create-404.mjs",
     "preview": "vite preview",
+    "test": "node --test",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist --nojekyll"
   },
