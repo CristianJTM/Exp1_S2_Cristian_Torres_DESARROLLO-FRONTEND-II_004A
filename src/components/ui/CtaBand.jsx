@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import styles from './CtaBand.module.css'
 
 export default function CtaBand({ title, text, primary, secondary }) {

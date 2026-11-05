@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import InventarioHeader from '../components/inventario/InventarioHeader.jsx'
 import TablaInventario from '../components/inventario/TablaInventario.jsx'
 import { ACCIONES, useInventario } from '../context/InventarioContext.jsx'

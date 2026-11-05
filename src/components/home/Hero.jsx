@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import StatList from '../ui/StatList.jsx'
 import styles from './Hero.module.css'
 

@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import InventarioHeader from '../components/inventario/InventarioHeader.jsx'
 import { ACCIONES, useInventario } from '../context/InventarioContext.jsx'
 import { TIPOS_ARTICULO } from '../data/inventario.js'
