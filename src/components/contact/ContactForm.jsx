@@ -1,6 +1,6 @@
 import useContactForm from '../../hooks/useContactForm.js'
 import { ASUNTOS, CONTACTO_SECCION, FORM_INICIAL } from '../../data/contacto.js'
-import FormField from './FormField.jsx'
+import FormField from '../ui/FormField.jsx'
 import styles from './ContactForm.module.css'
 
 export default function ContactForm() {
