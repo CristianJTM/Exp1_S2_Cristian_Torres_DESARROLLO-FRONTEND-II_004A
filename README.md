@@ -1,8 +1,8 @@
 # Súper Fresco 🛒
 
 SPA de supermercado desarrollada para **Desarrollo Frontend II (PFY2202)**. La Semana 1 construyó
-la navegación y las páginas institucionales; la Semana 2 agrega gestión global de inventario y
-Tailwind CSS.
+la navegación y las páginas institucionales; la Semana 2 agregó inventario global y Tailwind; la
+Semana 3 incorpora filtro por categoría, detalle de artículos y carrito con actualización de stock.
 
 ## Sitio publicado
 
@@ -53,6 +53,8 @@ npm test
 | `/contacto` | Contacto | Contacto |
 | `/inventario/agregar` | AgregarArticulo | Agregar |
 | `/inventario/lista` | ListaInventario | Lista |
+| `/inventario/detalle/:id` | DetalleArticulo | — |
+| `/carrito` | Carrito | Carrito |
 | `*` | NotFound | — |
 
 Toda la navegación interna usa `Link` y `NavLink` importados desde `react-router`. El navbar se
@@ -64,32 +66,65 @@ vistas.
 `InventarioContext` usa `useReducer` y `useContext`. El Provider envuelve toda la aplicación en
 `App.jsx`.
 
-El estado global es un array de artículos:
+El estado global es un objeto con inventario y carrito:
 
 ```js
-[
-  {
-    id: 'uuid',
-    nombre: 'Leche entera',
-    marca: 'Colún',
-    tipo: 'Lácteos',
-  },
-]
+{
+  articulos: [
+    {
+      id: 'uuid',
+      nombre: 'Leche entera',
+      marca: 'Colún',
+      tipo: 'Lácteos',
+      stock: 8,
+    },
+  ],
+  carrito: [
+    {
+      articuloId: 'uuid',
+      cantidad: 2,
+    },
+  ],
+}
 ```
+
+`stock` es la cantidad disponible en inventario y `cantidad` es la cantidad en el carrito. El
+carrito referencia artículos por `articuloId`, por lo que los nombres y precios no se duplican.
+
+Los 6 artículos de ejemplo viven en `src/data/inventarioInicial.js`. La función
+`crearInventarioInicial()` devuelve una copia nueva de los datos para que el reducer nunca comparta
+objetos con el seed.
 
 Acciones del reducer:
 
-- `ADD_ARTICULO`: recibe el artículo completo.
-- `DELETE_ARTICULO`: recibe el `id`.
+- `ADD_ARTICULO`: agrega un artículo con stock.
+- `DELETE_ARTICULO`: elimina el artículo y su referencia del carrito.
+- `ADD_TO_CART`: agrega una unidad y descuenta stock.
+- `INCREMENT_CART`: aumenta la cantidad del carrito y descuenta stock.
+- `DECREMENT_CART`: disminuye la cantidad y devuelve stock; al llegar a 1 elimina la fila.
+- `REMOVE_FROM_CART`: quita el artículo y restaura toda su cantidad al stock.
 
 El estado vive en memoria: al recargar la página se reinicia. La persistencia no forma parte de los
 requerimientos de esta actividad.
+
+## Filtro, detalle y carrito
+
+- La lista permite filtrar por categoría con estado local. El array `articulos` del contexto no se
+  modifica: se deriva con `filtrarArticulos`.
+- Al hacer clic en un artículo se abre `/inventario/detalle/:id`.
+- El detalle muestra nombre, marca, tipo y stock; permite agregar al carrito y deshabilita la acción
+  cuando no hay stock.
+- El carrito lista los artículos agregados, permite aumentar/disminuir cantidades y quitar filas.
+- Cada operación de carrito actualiza stock y carrito en una sola transición del reducer.
+- El navbar incluye Carrito con un badge que muestra la cantidad total de unidades.
+- Las tablas se convierten en tarjetas en móvil para evitar cortes horizontales.
 
 ## Validación del inventario
 
 Las reglas viven en `src/utils/validacion.js` y se prueban en `src/utils/validacion.test.js`.
 
 - `nombre` y `marca`: entre 2 y 60 caracteres, con al menos una letra y caracteres permitidos.
+- `stock`: entero entre 0 y 9999.
 - Se rechazan cadenas vacías, solo espacios, solo números o solo signos.
 - Se permiten números dentro del texto: `3 cereales`, `Leche 1 L`, `Coca-Cola`.
 - `tipo` debe pertenecer a `TIPOS_ARTICULO`.
@@ -110,9 +145,10 @@ Ejemplos inválidos: `""`, `"   "`, `"12345"`, `"!!!"`, `"Leche @"`, `"A"`, tipo
 | `src/components/ui/` | Componentes compartidos: PageHero, SectionHead, CtaBand, StatList y FormField |
 | `src/components/home`, `about`, `contact`, `products` | Secciones de dominio de Semana 1 |
 | `src/components/inventario/` | Cabecera y tabla de inventario |
-| `src/data/` | Contenido estático, navegación, tipos y estado inicial del formulario |
+| `src/components/carrito/` | Tabla/cards del carrito |
+| `src/data/` | Contenido estático, navegación, tipos, seed y estado inicial del formulario |
 | `src/hooks/` | `useContactForm` y `useFormArticulo` |
-| `src/utils/` | Validación, pruebas y formato de moneda |
+| `src/utils/` | Validación, filtro, selectores de carrito, pruebas y formato de moneda |
 | `src/styles/` | Tokens, reset, layout, utilidades globales y entrada de Tailwind |
 
 ## Estructura
@@ -121,7 +157,8 @@ Ejemplos inválidos: `""`, `"   "`, `"12345"`, `"!!!"`, `"Leche @"`, `"A"`, tipo
 src/
 ├─ context/
 │  ├─ InventarioContext.jsx
-│  └─ inventarioReducer.js
+│  ├─ inventarioReducer.js
+│  └─ inventarioReducer.test.js
 │
 ├─ pages/
 │  ├─ Home.jsx
@@ -129,6 +166,8 @@ src/
 │  ├─ Contacto.jsx
 │  ├─ AgregarArticulo.jsx
 │  ├─ ListaInventario.jsx
+│  ├─ DetalleArticulo.jsx
+│  ├─ Carrito.jsx
 │  └─ NotFound.jsx
 │
 ├─ components/
@@ -148,9 +187,11 @@ src/
 │  ├─ about/
 │  ├─ contact/
 │  ├─ products/
-│  └─ inventario/
-│     ├─ InventarioHeader.jsx
-│     └─ TablaInventario.jsx
+│  ├─ inventario/
+│  │  ├─ InventarioHeader.jsx
+│  │  └─ TablaInventario.jsx
+│  └─ carrito/
+│     └─ TablaCarrito.jsx
 │
 ├─ data/
 │  ├─ navegacion.js
@@ -160,7 +201,8 @@ src/
 │  ├─ contacto.js
 │  ├─ productos.js
 │  ├─ equipo.js
-│  └─ inventario.js
+│  ├─ inventario.js
+│  └─ inventarioInicial.js
 │
 ├─ hooks/
 │  ├─ useContactForm.js
@@ -169,6 +211,8 @@ src/
 ├─ utils/
 │  ├─ validacion.js
 │  ├─ validacion.test.js
+│  ├─ inventario.js
+│  ├─ inventario.test.js
 │  └─ formatoMoneda.js
 │
 ├─ styles/
@@ -223,11 +267,25 @@ https://cristianjtm.github.io/Exp1_S2_Cristian_Torres_DESARROLLO-FRONTEND-II_004
 
 - No hay backend ni llamadas a APIs.
 - El formulario de contacto no envía datos a ningún servidor.
-- El navbar inferior tiene cinco ítems con etiquetas cortas y nombres accesibles completos.
-- El estado de inventario se conserva al navegar entre rutas, pero se reinicia al recargar.
+- El navbar inferior tiene seis ítems: Inicio, Nosotros, Contacto, Agregar, Lista y Carrito.
+- El carrito muestra un badge con las unidades agregadas.
+- El estado de inventario y carrito se conserva al navegar entre rutas, pero se reinicia al recargar.
 - El proyecto usa `BrowserRouter` con `basename` y fallback `404.html` para GitHub Pages.
 - React Router 7 se importa siempre desde `react-router`; no se usa `react-router-dom`.
+- Las pruebas de reducer, filtro, carrito y validación se ejecutan con `npm test`.
 
 ## Autor
 
 Cristian Torres — Proyecto académico PFY2202.
+
+## Repositorio de entrega
+
+El repositorio se renombrará a:
+
+```text
+supermercado-cristian-torres-pfy2202
+```
+
+Mientras se realiza el cambio de nombre, el sitio publicado corresponde a la URL actual de GitHub
+Pages. Después del renombre hay que actualizar `REPO_NAME` en `vite.config.js`, las URLs del README
+y ejecutar `npm run deploy`.
