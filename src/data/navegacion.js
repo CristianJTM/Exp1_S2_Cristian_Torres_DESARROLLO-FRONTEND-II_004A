@@ -14,4 +14,10 @@ export const NAV_ITEMS = [
     ariaLabel: 'Lista de inventario',
     icon: '📋',
   },
+  {
+    to: '/carrito',
+    label: 'Carrito',
+    ariaLabel: 'Carrito de compras',
+    icon: '🛒',
+  },
 ]
