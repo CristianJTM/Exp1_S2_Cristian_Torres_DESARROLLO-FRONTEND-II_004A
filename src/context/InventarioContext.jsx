@@ -4,10 +4,12 @@ import { ESTADO_INICIAL, inventarioReducer } from './inventarioReducer.js'
 export const InventarioContext = createContext(null)
 
 export function InventarioProvider({ children }) {
-  const [articulos, dispatch] = useReducer(inventarioReducer, ESTADO_INICIAL)
+  const [estado, dispatch] = useReducer(inventarioReducer, ESTADO_INICIAL)
 
   return (
-    <InventarioContext.Provider value={{ articulos, dispatch }}>
+    <InventarioContext.Provider
+      value={{ articulos: estado.articulos, carrito: estado.carrito, dispatch }}
+    >
       {children}
     </InventarioContext.Provider>
   )

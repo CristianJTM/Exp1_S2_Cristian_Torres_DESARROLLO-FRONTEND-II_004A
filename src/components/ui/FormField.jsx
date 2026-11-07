@@ -25,6 +25,9 @@ export default function FormField({
   rows = 5,
   inputRef,
   className = '',
+  min,
+  max,
+  step,
 }) {
   const isTailwind = variant === 'tailwind'
   const errorId = `error-${id}`
@@ -83,6 +86,9 @@ export default function FormField({
           type={type}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          min={min}
+          max={max}
+          step={step}
           className={controlClass}
         />
       )}

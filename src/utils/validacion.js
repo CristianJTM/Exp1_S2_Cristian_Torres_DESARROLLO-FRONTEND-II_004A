@@ -64,6 +64,18 @@ export function validarArticulo(form, articulos = []) {
     errores.tipo = 'Selecciona un tipo de artículo válido.'
   }
 
+  const stockTexto = String(form.stock ?? '').trim()
+  const stock = Number(stockTexto)
+
+  if (
+    stockTexto === '' ||
+    !Number.isInteger(stock) ||
+    stock < 0 ||
+    stock > 9999
+  ) {
+    errores.stock = 'Ingresa una cantidad entera entre 0 y 9999.'
+  }
+
   if (!errores.nombre && !errores.marca) {
     const nombreNormalizado = normalizarTexto(nombre)
     const marcaNormalizada = normalizarTexto(marca)

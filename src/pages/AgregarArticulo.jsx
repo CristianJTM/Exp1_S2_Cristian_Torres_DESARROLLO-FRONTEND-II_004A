@@ -24,6 +24,7 @@ export default function AgregarArticulo() {
     handleSubmit,
     nombreRef,
     marcaRef,
+    stockRef,
     tipoRef,
   } = useFormArticulo({
     initialValues: FORM_INICIAL_ARTICULO,
@@ -90,6 +91,22 @@ export default function AgregarArticulo() {
 
           <FormField
             variant="tailwind"
+            id="stock"
+            name="stock"
+            label="Cantidad disponible"
+            type="number"
+            min={0}
+            max={9999}
+            step={1}
+            value={form.stock}
+            onChange={handleChange}
+            error={errores.stock}
+            inputRef={stockRef}
+            required
+          />
+
+          <FormField
+            variant="tailwind"
             as="select"
             id="tipo"
             name="tipo"
@@ -100,7 +117,6 @@ export default function AgregarArticulo() {
             inputRef={tipoRef}
             options={TIPOS_ARTICULO}
             required
-            className="sm:col-span-2"
           />
 
           <div className="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center">

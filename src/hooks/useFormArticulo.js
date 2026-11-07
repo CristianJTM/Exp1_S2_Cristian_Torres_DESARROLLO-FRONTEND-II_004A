@@ -6,6 +6,7 @@ export default function useFormArticulo({ initialValues, articulos = [], onGuard
   const [errores, setErrores] = useState({})
   const nombreRef = useRef(null)
   const marcaRef = useRef(null)
+  const stockRef = useRef(null)
   const tipoRef = useRef(null)
 
   function handleChange(event) {
@@ -31,6 +32,8 @@ export default function useFormArticulo({ initialValues, articulos = [], onGuard
         nombreRef.current?.focus()
       } else if (nuevosErrores.marca) {
         marcaRef.current?.focus()
+      } else if (nuevosErrores.stock) {
+        stockRef.current?.focus()
       } else if (nuevosErrores.tipo) {
         tipoRef.current?.focus()
       }
@@ -42,6 +45,7 @@ export default function useFormArticulo({ initialValues, articulos = [], onGuard
       nombre: form.nombre.trim().replace(/\s+/g, ' '),
       marca: form.marca.trim().replace(/\s+/g, ' '),
       tipo: form.tipo,
+      stock: Number(form.stock),
     })
 
     setForm(initialValues)
@@ -55,6 +59,7 @@ export default function useFormArticulo({ initialValues, articulos = [], onGuard
     handleSubmit,
     nombreRef,
     marcaRef,
+    stockRef,
     tipoRef,
   }
 }

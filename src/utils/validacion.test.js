@@ -6,6 +6,7 @@ const articuloBase = {
   nombre: 'Leche entera',
   marca: 'Colún',
   tipo: 'Lácteos',
+  stock: 10,
 }
 
 test('acepta artículos válidos', () => {
@@ -41,6 +42,16 @@ test('rechaza nombres demasiado largos', () => {
 test('valida que el tipo pertenezca a TIPOS_ARTICULO', () => {
   const errores = validarArticulo({ ...articuloBase, tipo: 'Otros' })
   assert.equal(errores.tipo, 'Selecciona un tipo de artículo válido.')
+})
+
+test('valida stock entero entre 0 y 9999', () => {
+  assert.deepEqual(validarArticulo({ ...articuloBase, stock: 0 }), {})
+  assert.deepEqual(validarArticulo({ ...articuloBase, stock: 9999 }), {})
+
+  for (const stock of ['', -1, 1.5, 'abc', 10000]) {
+    const errores = validarArticulo({ ...articuloBase, stock })
+    assert.ok(errores.stock, `Debe rechazar stock: ${JSON.stringify(stock)}`)
+  }
 })
 
 test('detecta duplicados por nombre y marca sin distinguir mayúsculas ni tildes', () => {
