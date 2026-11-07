@@ -7,6 +7,8 @@ import QuienesSomos from './pages/QuienesSomos.jsx'
 import Contacto from './pages/Contacto.jsx'
 import AgregarArticulo from './pages/AgregarArticulo.jsx'
 import ListaInventario from './pages/ListaInventario.jsx'
+import DetalleArticulo from './pages/DetalleArticulo.jsx'
+import Carrito from './pages/Carrito.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 // En desarrollo BASE_URL es "/"; en GitHub Pages es "/<repositorio>/".
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="contacto" element={<Contacto />} />
             <Route path="inventario/agregar" element={<AgregarArticulo />} />
             <Route path="inventario/lista" element={<ListaInventario />} />
+            <Route path="inventario/detalle/:id" element={<DetalleArticulo />} />
+            <Route path="carrito" element={<Carrito />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
