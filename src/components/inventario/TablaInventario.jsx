@@ -1,7 +1,7 @@
 export default function TablaInventario({ articulos, onEliminar }) {
   return (
     <div className="overflow-x-auto rounded-3xl border border-solid border-sf-border bg-white shadow-sm">
-      <table className="min-w-[560px] w-full text-left text-sm">
+      <table className="min-w-[680px] w-full text-left text-sm">
         <caption className="sr-only">Listado de artículos del inventario</caption>
         <thead className="bg-sf-sand text-xs font-extrabold uppercase tracking-wide text-sf-muted">
           <tr>
@@ -14,6 +14,9 @@ export default function TablaInventario({ articulos, onEliminar }) {
             <th scope="col" className="px-4 py-3">
               Tipo
             </th>
+            <th scope="col" className="px-4 py-3">
+              Stock
+            </th>
             <th scope="col" className="px-4 py-3 text-right">
               Acciones
             </th>
@@ -25,6 +28,17 @@ export default function TablaInventario({ articulos, onEliminar }) {
               <td className="px-4 py-3 font-semibold text-sf-text">{articulo.nombre}</td>
               <td className="px-4 py-3 text-sf-muted">{articulo.marca}</td>
               <td className="px-4 py-3 text-sf-muted">{articulo.tipo}</td>
+              <td className="px-4 py-3">
+                <span
+                  className={
+                    articulo.stock > 0
+                      ? 'font-bold text-sf-green'
+                      : 'font-bold text-sf-error'
+                  }
+                >
+                  {articulo.stock > 0 ? articulo.stock : 'Sin stock'}
+                </span>
+              </td>
               <td className="px-4 py-3 text-right">
                 <button
                   type="button"
